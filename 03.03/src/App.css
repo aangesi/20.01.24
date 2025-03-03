@@ -1,0 +1,95 @@
+/* App.css */
+
+/* General styling for the App */
+.App {
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f7f6;
+}
+
+h1 {
+  color: #333;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* Styling the form */
+form {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Input Fields Styling */
+input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  width: 100%;
+}
+
+input:focus {
+  border-color: #007BFF;
+}
+
+label {
+  font-size: 1rem;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Button Styling */
+button {
+  padding: 12px 20px;
+  font-size: 1rem;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Message Styling */
+p {
+  font-size: 1rem;
+  color: #d9534f;
+  text-align: center;
+}
+
+/* Table Styling */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.user-table th, .user-table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.user-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.user-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
