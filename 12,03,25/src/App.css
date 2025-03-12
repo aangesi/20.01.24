@@ -1,0 +1,33 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+}
+
+th {
+  background: rgba(0, 0, 0, 0.2);
+  font-size: 18px;
+}
+
+td {
+  background: rgba(255, 255, 255, 0.3);
+  font-weight: bold;
+}
+
+tr:hover td {
+  background: rgba(255, 255, 255, 0.5);
+  transition: 0.3s;
+}
+
+tr:nth-child(even) td {
+  background: rgba(255, 255, 255, 0.2);
+}
