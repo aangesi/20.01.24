@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Таблица с информацией</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #be61be;
+        }
+        th {
+            background-color: #e296e9;
+        }
+        input[type="text"] {
+            width: 90%;
+            padding: 5px;
+            margin-top: 5px;
+        }
+        .search-bar {
+            width: 90%;
+            margin: 20px auto;
+            text-align: center;
+        }
+        .search-bar input {
+            width: 50%;
+            padding: 8px;
+            font-size: 16px;
+        }
+    </style>
+    <script>
+        let filterTimeout;
+
+        function applyFilter() {
+            clearTimeout(filterTimeout);
+            filterTimeout = setTimeout(() => {
+                const fields = ['user_nickname', 'address_from', 'address_to', 'track_number', 'invoice_price', 'courier_price', 'commission'];
+                const params = new URLSearchParams();
+
+                // Добавляем фильтры по столбцам
+                fields.forEach(field => {
+                    const value = document.getElementById(`filter-${field}`).value.trim();
+                    if (value) {
+                        params.append(field, value);
+                    }
+                });
+
+                // Добавляем глобальный поиск
+                const searchTerm = document.getElementById('search-term').value.trim();
+                if (searchTerm) {
+                    params.append('search_term', searchTerm);
+                }
+
+                fetch(`/filter?${params.toString()}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const tableBody = document.querySelector('table tbody');
+                        tableBody.innerHTML = '';
+
+                        data.forEach(row => {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `
+                                <td>${row.id}</td>
+                                <td>${row.user_nickname}</td>
+                                <td>${row.address_from}</td>
+                                <td>${row.address_to}</td>
+                                <td>${row.track_number}</td>
+                                <td>${row.invoice_price}</td>
+                                <td>${row.courier_price}</td>
+                                <td>${row.commission}</td>
+                            `;
+                            tableBody.appendChild(tr);
+                        });
+                    });
+            }, 400); // задержка перед отправкой запроса
+        }
+    </script>
+</head>
+<body>
+
+    <h1 style="text-align: center;">Таблица с заказами</h1>
+
+    <div class="search-bar">
+        <input type="text" id="search-term" placeholder="Поиск по всем полям..." oninput="applyFilter()">
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>
+                    Ник
+                    <input type="text" id="filter-user_nickname" oninput="applyFilter()" placeholder="Фильтр">
+                </th>
+                <th>
+                    Адрес отправления
+                    <input type="text" id="filter-address_from" oninput="applyFilter()" placeholder="Фильтр">
+                </th>
+                <th>
+                    Адрес назначения
+                    <input type="text" id="filter-address_to" oninput="applyFilter()" placeholder="Фильтр">
+                </th>
+                <th>
+                    Номер отслеживания
+                    <input type="text" id="filter-track_number" oninput="applyFilter()" placeholder="Фильтр">
+                </th>
+                <th>
+                    Цена (в тенге)
+                    <input type="text" id="filter-invoice_price" oninput="applyFilter()" placeholder="Фильтр">
+                </th>
+                <th>
+                    Цена курьера (в тенге)
+                    <input type="text" id="filter-courier_price" oninput="applyFilter()" placeholder="Фильтр">
+                </th>
+                <th>
+                    Комиссия (в тенге)
+                    <input type="text" id="filter-commission" oninput="applyFilter()" placeholder="Фильтр">
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                <td>{{ row['id'] }}</td>
+                <td>{{ row['user_nickname'] }}</td>
+                <td>{{ row['address_from'] }}</td>
+                <td>{{ row['address_to'] }}</td>
+                <td>{{ row['track_number'] }}</td>
+                <td>{{ row['invoice_price'] }}</td>
+                <td>{{ row['courier_price'] }}</td>
+                <td>{{ row['commission'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
